@@ -100,11 +100,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include <strings.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <ctype.h>
 #include "linenoise.h"
 
 #define LINENOISE_DEFAULT_HISTORY_MAX_LEN 100
@@ -155,8 +155,10 @@ static int isUnsupportedTerm(void) {
     int j;
 
     if (term == NULL) return 0;
+    for ( ; *term; ++term) *term = tolower(*term);
     for (j = 0; unsupported_term[j]; j++)
-        if (!strcasecmp(term,unsupported_term[j])) return 1;
+        for ( ; *unsupported_term[j]; ++unsupported_term[j]) *unsupported_term[j] = tolower(*unsupported_term[j]);
+        if (!strcmp(term,unsupported_term[j])) return 1;
     return 0;
 }
 
