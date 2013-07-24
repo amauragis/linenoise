@@ -157,7 +157,6 @@ static int isUnsupportedTerm(void) {
     if (term == NULL) return 0;
     for ( ; *term; ++term) *term = tolower(*term);
     for (j = 0; unsupported_term[j]; j++)
-        for ( ; *unsupported_term[j]; ++unsupported_term[j]) *unsupported_term[j] = tolower(*unsupported_term[j]);
         if (!strcmp(term,unsupported_term[j])) return 1;
     return 0;
 }
